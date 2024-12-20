@@ -25,7 +25,7 @@ const SignIn = () => {
     signinUser(email, password, rememberMe)
       .then((result) => {
         const user = { email: email };
-        axios.post("http://localhost:3000/jwt", user,{withCredentials:true}).then((res) => {
+        axios.post("https://job-portal-server-taupe.vercel.app/jwt", user,{withCredentials:true}).then((res) => {
           console.log(res.data);
         });
 
@@ -48,10 +48,10 @@ const SignIn = () => {
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left w-96">
+        <div className="text-center lg:text-left lg:w-96">
           <Lottie animationData={signinLotiie}></Lottie>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-11/12 mx-auto shadow-2xl">
           <div className="text-center">
             <h1 className="text-5xl mt-4 font-bold font-gilroy">Sign In</h1>
           </div>
@@ -95,11 +95,11 @@ const SignIn = () => {
                       checked={rememberMe}
                       onChange={() => setRememberMe(!rememberMe)}
                     />
-                    <span className="label-text">Remember Me</span>
+                    <span className=" text-xs lg:label-text">Remember Me</span>
                   </label>
                 </div>
                 <label className="label">
-                  <Link to="/signin" className="label text-blue-500 link-hover">
+                  <Link to="/signin" className="text-xs lg:text-sm pt-2 text-blue-500 link-hover">
                     Forgot password?
                   </Link>
                 </label>

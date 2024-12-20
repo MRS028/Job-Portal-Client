@@ -6,15 +6,19 @@ import { FiPhone } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loader/Loading";
 import axios from "axios";
+import { IoLocationOutline } from "react-icons/io5";
+import { FcAbout } from "react-icons/fc";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyApplications = () => {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetch(`http://localhost:3000/job-applications?email=${user.email}`)
+    // fetch(`https://job-portal-server-taupe.vercel.app/job-applications?email=${user.email}`)
     //   .then((res) => res.json())
     //   .then((data) => {
     //     setJobs(data);
@@ -22,13 +26,20 @@ const MyApplications = () => {
     //   });
     //
     //skrifat483@gmail.com
-    axios
-      .get(`http://localhost:3000/job-applications?email=${user.email}`,{withCredentials:true})
-      .then((res) => {
-        setJobs(res.data)
-        console.log(res.data);
-        setLoading(false);
-      });
+    // axios
+    //   .get(`https://job-portal-server-taupe.vercel.app/job-applications?email=${user.email}`,{withCredentials:true})
+    //   .then((res) => {
+    //     setJobs(res.data)
+    //     console.log(res.data);
+    //     setLoading(false);
+    //   });
+
+    //From Axios hook
+
+    axiosSecure.get(`/job-applications?email=${user.email}`).then((res) => {
+      setJobs(res.data);
+      setLoading(false);
+    });
   }, [user.email]);
 
   const handleDetails = (jobId) => {
@@ -73,6 +84,11 @@ const MyApplications = () => {
                 <FiPhone className="text-green-600" />
                 {job.phone}
               </div>
+              {/* <div className="">
+              <p className=" text-gray-700"> Job Title
+              </p>
+            </div>
+            <div><p className="text-gray-700"> {job.title}</p></div> */}
 
               <div className="font-medium text-gray-600">LinkedIn:</div>
               <div className="flex items-center gap-2">
@@ -86,18 +102,23 @@ const MyApplications = () => {
                 {job.github}
               </div>
 
-              <div className="font-medium text-gray-600">Location:</div>
-              <div>{job.location || "Not Provided"}</div>
+              <div className="font-medium text-gray-600">
+                <h3>Location:</h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <IoLocationOutline />
+                {job.location || "None"}
+              </div>
+
+              <div>
+                <p className="font-medium text-gray-600">About:</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {" "}
+                <FcAbout /> {job.about}
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-gray-600">About:</p>
-              <p className="text-gray-700">{job.about}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">
-                <span className="font-medium">Job Title:</span> {job.title}
-              </p>
-            </div>
+
             <div className="text-right">
               <button
                 onClick={() => handleDetails(job._id)}

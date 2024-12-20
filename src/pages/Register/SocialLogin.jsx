@@ -16,10 +16,10 @@ const SocialLogin = () => {
       .then((result) => {
         const email = result.user.email;
         const user = { email: email };
-        axios.post("http://localhost:3000/jwt", user,{withCredentials:true}).then((res) => {
+        axios.post("https://job-portal-server-taupe.vercel.app/jwt", user,{withCredentials:true}).then((res) => {
           console.log(res.data);
         });
-        console.log();
+        // console.log();
         navigate(location?.state ? location.state : "/");
         Swal.fire({
           title: "Welcome Back",

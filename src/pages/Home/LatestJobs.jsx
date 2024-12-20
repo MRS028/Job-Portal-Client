@@ -4,7 +4,7 @@ import LatestJobCard from "../JobDetails/LatestJobCard";
 const LatestJobs = () => {
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/jobs")
+    fetch("https://job-portal-server-taupe.vercel.app/jobs")
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);

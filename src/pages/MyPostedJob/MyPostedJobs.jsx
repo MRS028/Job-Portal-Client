@@ -9,7 +9,7 @@ const MyPostedJobs = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/jobs?email=${user.email}`)
+    fetch(`https://job-portal-server-taupe.vercel.app/jobs?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
@@ -36,7 +36,7 @@ const MyPostedJobs = () => {
         // Optimistic UI update: Immediately remove job from the UI
         setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
 
-        const response = await fetch(`http://localhost:3000/jobs/${jobId}`, {
+        const response = await fetch(`https://job-portal-server-taupe.vercel.app/jobs/${jobId}`, {
           method: "DELETE",
         });
 

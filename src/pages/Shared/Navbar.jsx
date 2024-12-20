@@ -76,7 +76,7 @@ const Navbar = () => {
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">
-          <img className="w-10" src={jobicon} alt="" />
+          <img className="w-10 hidden lg-flex" src={jobicon} alt="" />
           Job portal
         </a>
       </div>
@@ -102,7 +102,7 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="/register" className="btn">
+            <Link to="/register" className="btn hidden lg:flex">
               Register
             </Link>
             <Link to="/signin" className="btn">

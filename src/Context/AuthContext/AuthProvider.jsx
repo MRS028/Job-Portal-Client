@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import auth from "../../Firebase/firebase.init";
+import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -38,7 +39,20 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       // console.log(currentUser);
-      setLoadiing(false);
+      if (currentUser?.email) {
+        const user = { email: currentUser?.email };
+        axios.post("https://job-portal-server-taupe.vercel.app/jwt", user).then((res) => {
+          // console.log(res.data);
+          setLoadiing(false);
+        });
+      } else {
+        axios
+          .post("https://job-portal-server-taupe.vercel.app/logout", {}, { withCredentials: true })
+          .then((res) => {
+            // console.log("LogOut", res.data);
+            setLoadiing(false);
+          });
+      }
     });
 
     return () => {

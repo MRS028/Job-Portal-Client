@@ -37,7 +37,7 @@ const AddJob = () => {
     return;
   }
 
-    fetch("http://localhost:3000/jobs", {
+    fetch("https://job-portal-server-taupe.vercel.app/jobs", {
       method: "POST",
       headers: {
         "content-type": "application/json",
