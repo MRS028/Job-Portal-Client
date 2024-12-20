@@ -1,6 +1,8 @@
 # Job Portal Platform
 
 A comprehensive job portal platform that enables seamless interaction between job seekers and employers. The platform supports full CRUD operations for managing job postings, including adding, updating, and deleting jobs, as well as viewing all jobs and applying for these positions. 
+
+
 [**Job Portal Live Demo-1**](https://job-portal-b10.web.app)
 
 [**Job Portal Live Demo-2**](https://job-portal-b10.firebaseapp.com)
