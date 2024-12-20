@@ -16,7 +16,7 @@ const JobApply = () => {
     const form = e.target;
     const name = form.name.value;
     const phone = form.phone.value;
-    const photo = form.photo.value;
+    // const photo = form.photo.value;
     const resume = form.resume.value;
     const position = form.position.value;
     const about = form.about.value;
@@ -39,14 +39,14 @@ const JobApply = () => {
       applicant_email: user?.email,
       name,
       phone,
-      photo,
+      //photo,
       resume,
       position,
       about,
       linkedin,
       github,
     };
-    if (!name || !phone || !photo || !resume || !position || !about) {
+    if (!name || !phone || !resume || !position || !about) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -154,8 +154,8 @@ const JobApply = () => {
             className="input input-bordered w-full"
           />
         </div>
-        {/* Upload Photo */}
-        <div>
+        {/* Upload Photo 
+         <div>
           <label
             className="block text-sm font-medium text-gray-700"
             htmlFor="photo"
@@ -170,6 +170,10 @@ const JobApply = () => {
             className="file-input file-input-bordered w-full"
           />
         </div>
+        
+        
+        */}
+       
 
         {/* Upload Resume */}
         <div>
@@ -180,10 +184,11 @@ const JobApply = () => {
             Upload Resume
           </label>
           <input
-            type="file"
+            type="link"
             id="resume"
             name="resume"
-            className="file-input file-input-bordered w-full"
+            className="file-input file-input-bordered w-full "
+            placeholder='Enter Your CV Link'
           />
         </div>
 
@@ -199,7 +204,8 @@ const JobApply = () => {
             id="position"
             name="position"
             className="select select-bordered w-full"
-            defaultValue=""
+            defaultValue=''
+            
           >
             <option value="" disabled>
               Select a position

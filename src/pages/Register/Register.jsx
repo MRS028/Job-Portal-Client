@@ -4,11 +4,16 @@ import registerLottieData from "../../assets/Lottie/register.json";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import SocialLogin from "./SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -28,8 +33,23 @@ const Register = () => {
     //password validation
     createUser(email, password)
       .then((result) => {
+        const user = result.user;
         navigate("/");
-        console.log(result);
+        Swal.fire({
+          title: "Registration Successful!",
+          text: "Welcome to Chill Gamer!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+        });
+
+        return updateProfile(user, {
+          displayName: fullName,
+          photoURL: photoUrl,
+        });
+
+        // console.log(result);
       })
       .catch((error) => {
         console.log("ERROR", error);
@@ -65,6 +85,18 @@ const Register = () => {
                 name="email"
                 type="email"
                 placeholder="email"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">PhotoURL</span>
+              </label>
+              <input
+                name="photoUrl"
+                type="link"
+                placeholder="PhotoURL"
                 className="input input-bordered"
                 required
               />

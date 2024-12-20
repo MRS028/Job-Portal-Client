@@ -5,13 +5,16 @@ import AuthContext from "../../Context/AuthContext/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { option } from "motion/react-client";
 
 const SignIn = () => {
   const { signinUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-const location = useLocation();
+  const location = useLocation();
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,8 +24,21 @@ const location = useLocation();
 
     signinUser(email, password, rememberMe)
       .then((result) => {
+        const user = { email: email };
+        axios.post("http://localhost:3000/jwt", user,{withCredentials:true}).then((res) => {
+          console.log(res.data);
+        });
+
+        Swal.fire({
+          title: "Welcome Back!",
+          text: "You have successfully signed in.",
+          icon: "success",
+          timer: 1000, // Closes automatically after 1 second
+          timerProgressBar: true,
+        });
+
         navigate(location?.state ? location.state : "/");
-        console.log("signin user", result.data);
+        // console.log("signin user", result.data);
       })
       .catch((error) => {
         console.log("ERROR", error);
@@ -37,7 +53,7 @@ const location = useLocation();
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="text-center">
-            <h1 className="text-5xl mt-4 font-bold">Sign In</h1>
+            <h1 className="text-5xl mt-4 font-bold font-gilroy">Sign In</h1>
           </div>
           <form className="card-body" onSubmit={handleSignIn}>
             <div className="form-control">
@@ -70,26 +86,26 @@ const location = useLocation();
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               <div className="flex justify-between">
-              <div className="form-control pt-3">
-              <label className="label flex justify-start gap-2">
-              <input
-                type="checkbox"
-                name="rememberMe"
-                className="checkbox checkbox-sm w-5 h-5"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              />
-                <span className="label-text">Remember Me</span>
-              </label>
-            </div>
-            <label className="label">
-                <Link to='/signin' className="label text-blue-500 link-hover">
-                  Forgot password?
-                </Link>
-              </label>
+                <div className="form-control pt-3">
+                  <label className="label flex justify-start gap-2">
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      className="checkbox checkbox-sm w-5 h-5"
+                      checked={rememberMe}
+                      onChange={() => setRememberMe(!rememberMe)}
+                    />
+                    <span className="label-text">Remember Me</span>
+                  </label>
+                </div>
+                <label className="label">
+                  <Link to="/signin" className="label text-blue-500 link-hover">
+                    Forgot password?
+                  </Link>
+                </label>
               </div>
             </div>
-            
+
             <div className="form-control mt-1">
               <button className="btn btn-primary">Login</button>
             </div>

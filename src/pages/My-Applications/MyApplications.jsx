@@ -5,6 +5,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loader/Loading";
+import axios from "axios";
 
 const MyApplications = () => {
   const { user } = useAuth();
@@ -13,10 +14,19 @@ const MyApplications = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/job-applications?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
+    // fetch(`http://localhost:3000/job-applications?email=${user.email}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setJobs(data);
+    //     setLoading(false);
+    //   });
+    //
+    //skrifat483@gmail.com
+    axios
+      .get(`http://localhost:3000/job-applications?email=${user.email}`,{withCredentials:true})
+      .then((res) => {
+        setJobs(res.data)
+        console.log(res.data);
         setLoading(false);
       });
   }, [user.email]);
@@ -29,8 +39,9 @@ const MyApplications = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-11/12 mx-auto mb-5">
-      {loading ? <Loading></Loading> :
-      jobs.length > 0 ? (
+      {loading ? (
+        <Loading></Loading>
+      ) : jobs.length > 0 ? (
         jobs.map((job, index) => (
           <div
             key={job._id}
