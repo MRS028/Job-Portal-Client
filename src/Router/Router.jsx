@@ -11,6 +11,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AddJob from "../pages/Add Job/AddJob";
 import MyPostedJobs from "../pages/MyPostedJob/MyPostedJobs";
 import ViewApplications from "../pages/ViewApplications/ViewApplications";
+import AllJobs from "../pages/All Jobs/AllJobs";
 
 const Router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/jobs",
+        element: <AllJobs></AllJobs>,
       },
       {
         path: "/jobs/:id",
